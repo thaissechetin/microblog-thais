@@ -37,7 +37,12 @@ function lerUsuarios(mysqli $conexao):array{
 
 
 // Função excluirUsuario: usada em usuario-exclui.php
+function excluirUsuario(mysqli $conexao, int $id){
 
+
+$sql = "DELETE FROM usuarios WHERE id = $id";
+mysqli_query($conexao, $sql) or die (mysqli_error($conexao));
+}
 // fim excluirUsuario
 
 
@@ -75,12 +80,13 @@ function verificaSenha(string $senhaFormulario,  string $senhaBanco){
 // Função atualizarUsuario: usada em usuario-atualiza.php
 function atualizarUsuario( mysqli $conexao, int $id, string $nome, string $email, string $senha, string $tipo){
 
-    $sql = "UPDATE usuarios SET nome = '$nome, email = '$email', senha = '$senha',
+    $sql = "UPDATE usuarios SET nome = '$nome', email = '$email', senha = '$senha',
     tipo = '$tipo' WHERE id =$id";
 
 mysqli_query($conexao, $sql) or die (mysqli_error($conexao));
 
 }
+
 // fim atualizarUsuario
 
 

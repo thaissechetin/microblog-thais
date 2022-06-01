@@ -16,15 +16,21 @@ if(empty($_POST['senha'])){
 } else {
 /* caso contrário, se o usuário digitou alguma coisa no campo senha, precisamos verificar a senha digitada. */
 $senha = verificaSenha($_POST['senha'], $usuario['senha']);
+
+
 }
+
+
 
 /* teste de senhas
 echo$usuario['senha'];
 echo "<br>";
-echo $senha; */
+echo $senha;
+ */
+atualizarUsuario($conexao, $id, $nome, $email, $senha, $tipo);
+
+header("location:usuarios.php");
 }
-
-
 ?>
 
 
@@ -55,10 +61,10 @@ echo $senha; */
         <select class="custom-select" name="tipo" id="tipo" required>
           <option value=""></option>                  
           <option 
-          <?php if($usuario['tipo'] == 'editor')echo "selected" ?>
+          <?php if($usuario['tipo'] == 'editor')echo " selected " ?>
           value="editor">Editor</option>  
           <option	
-          <?php if($usuario['tipo'] == 'admin') echo "selected"?>   
+          <?php if($usuario['tipo'] == 'admin') echo " selected "?>   
         value="admin">Administrador</option>
         </select>
       </div>
