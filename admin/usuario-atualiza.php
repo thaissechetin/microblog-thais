@@ -3,6 +3,28 @@ require "../inc/funcoes-usuarios.php";
 require "../inc/cabecalho-admin.php";
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $usuario = lerUmUsuario($conexao, $id);
+
+if (isset($_POST['atualizar'])){
+  $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
+  $email =filter_input(INPUT_POST, 'email',FILTER_SANITIZE_SPECIAL_CHARS);
+  $tipo = filter_input(INPUT_POST,'tipo',FILTER_SANITIZE_SPECIAL_CHARS);
+
+/* lÓGICA PARA A SENHA 
+Se o campo da senha do formulário estiver vazio,então significa que o usuário não mudou a senha */
+if(empty($_POST['senha'])){
+  $senha = $usuario['senha']; //MANTER a senha já existente no banco
+} else {
+/* caso contrário, se o usuário digitou alguma coisa no campo senha, precisamos verificar a senha digitada. */
+$senha = verificaSenha($_POST['senha'], $usuario['senha']);
+}
+
+/* teste de senhas
+echo$usuario['senha'];
+echo "<br>";
+echo $senha; */
+}
+
+
 ?>
 
 
