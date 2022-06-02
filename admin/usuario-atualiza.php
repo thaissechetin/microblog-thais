@@ -8,7 +8,7 @@ $usuario = lerUmUsuario($conexao, $id);
 
 if (isset($_POST['atualizar'])){
   $nome = filter_input(INPUT_POST, 'nome', FILTER_SANITIZE_SPECIAL_CHARS);
-  $email =filter_input(INPUT_POST, 'email',FILTER_SANITIZE_SPECIAL_CHARS);
+  $email =filter_input(INPUT_POST, 'email',FILTER_SANITIZE_EMAIL);
   $tipo = filter_input(INPUT_POST,'tipo',FILTER_SANITIZE_SPECIAL_CHARS);
 
 /* lÓGICA PARA A SENHA 
