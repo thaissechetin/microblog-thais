@@ -1,6 +1,7 @@
 <?php 
 require "../inc/funcoes-usuarios.php"; //funcoes sempre sao requisitadas primeiro
 require "../inc/cabecalho-admin.php"; 
+verificaAcessoAdmin();
 
 
 if(isset($_POST['inserir']) ){

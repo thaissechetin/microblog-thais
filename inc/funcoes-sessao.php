@@ -3,7 +3,7 @@
 os recursos de login/logout e verificação
 de permissão de acesso dos usuários */
 
-/* verificar se não existe um sessão em funcionamento */
+/* verificar se não existe uma sessão em funcionamento */
 if(!isset($_SESSION)){
     session_start();
 }
@@ -33,8 +33,17 @@ function login(int $id, string $nome, string $email, string $tipo){
 function logout(){
     session_start();
     session_destroy();
-    header("location:../login.php");
-    die();
+    header("location:../login.php?logout");
+    die();//ou ext
 
+}
+
+
+function verificaAcessoAdmin(){
+    if($_SESSION['tipo'] != 'admin'){
+        //redirecione para a página não -autorizado
+        header("location:nao-autorizado.php");
+        die();//ou exit
+    }
 }
 
