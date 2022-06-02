@@ -92,7 +92,7 @@ mysqli_query($conexao, $sql) or die (mysqli_error($conexao));
 
 
 // Função buscarUsuario: usada em login.php
-function buscarUsuario(mysqli $conexao, string $email): array {
+function buscarUsuario(mysqli $conexao, string $email){
     $sql = "SELECT id, nome, email, tipo, senha FROM usuarios
     WHERE email = '$email'";
     $resultado = mysqli_query($conexao, $sql) or die (mysqli_error($conexao));
