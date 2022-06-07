@@ -26,8 +26,9 @@ $quantidade = count($posts);
           <tr>
             <th>Título</th>
             <th>Data</th>
-            <!-- aqui eu preciso fazer o if else  -->
+            <?php if($tipoUsuarioLogado == 'admin'){ ?>
             <th>Autor</th>
+            <?php } ?>
             <th colspan="2" class="text-center">Operações</th>
           </tr>
         </thead>
