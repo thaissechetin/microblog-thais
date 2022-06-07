@@ -5,7 +5,7 @@ require "../inc/cabecalho-admin.php";
 
 /* rECUPERANDO OS DADOS DO USUARIO Q ESTÁ LOGADO NA SESSÃO */
 $idUsuariologado = $_SESSION['id'];
-$tipoUsadologado = $_SESSION['tipo'];
+$tipoUsuariologado = $_SESSION['tipo'];
 
 $posts = lerPosts($conexao, $idUsuariologado, $tipoUsadologado);
 $quantidade = count($posts);
@@ -26,7 +26,7 @@ $quantidade = count($posts);
           <tr>
             <th>Título</th>
             <th>Data</th>
-            <?php if($tipoUsuarioLogado == 'admin'){ ?>
+            <?php if($tipoUsuariologado == 'admin'){ ?>
             <th>Autor</th>
             <?php } ?>
             <th colspan="2" class="text-center">Operações</th>
@@ -40,7 +40,10 @@ $quantidade = count($posts);
           <tr>
             <td> <?=$post['titulo'] ?></td>
             <td> <?=$post['data']?> </td> 
+            <?php if( $tipoUsuarioLogado == 'admin'){ ?>
             <td> <?=$post['autor']?> </td>
+            <?php } ?>
+
             <td class="text-center">
               <a class="btn btn-warning btn-sm" 
               href="post-atualiza.php?id=<?=$post['id']?>">
