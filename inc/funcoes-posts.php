@@ -4,7 +4,7 @@ require "conecta.php";
 /* Usada em post-insere.php */
 function inserirPost(mysqli $conexao, string $titulo, string $texto, string $resumo, string $imagem, int $idUsuarioLogado){
 
-    $sql = "INSERT INTO posts(titulo, texto, resumo, imagem, usuario_id VALUES('$titulo', '$texto', '$resumo', '$imagem', $idUsuarioLogado)";
+    $sql = "INSERT INTO posts(titulo, texto, resumo, imagem, usuario_id) VALUES('$titulo', '$texto', '$resumo', '$imagem', $idUsuarioLogado)";
 
     mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
 } // fim inserirPost
@@ -12,9 +12,18 @@ function inserirPost(mysqli $conexao, string $titulo, string $texto, string $res
 
 
 /* Usada em posts.php */
-function lerPosts(mysqli $conexao): array
+function lerPosts(mysqli $conexao, int $idUsuarioLogado, string $tipoUsuarioLogado): array
 {
-    $sql = "";
+    /* SE o tipo de usuário for admin */
+    if($tipoUsuarioLogado == 'admin'){
+    // Montamos um SQL que traga todos os posts  de qualquer um)
+        $sql = "SELECT posts.id, posts.titulo, posts.data, usuarios.nome AS autor FROM
+        posts INNER JOIN usuarios ON posts.usuario_id = usuarios.id ORDER BY data DESC";
+    } else {
+        //senão, montamos um SQL que traga os posts apenas do editor
+        $sql = "SELECT id, titulo, data FROM posts WHERE usuario_id=$idUsuarioLogado
+         ORDER BY data DESC";
+    }
 
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     $posts = [];

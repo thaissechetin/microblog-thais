@@ -1,11 +1,20 @@
 <?php 
-require "../inc/cabecalho-admin.php"; 
+require "../inc/funcoes-posts.php";
+require "../inc/cabecalho-admin.php";
+
+
+/* rECUPERANDO OS DADOS DO USUARIO Q ESTÁ LOGADO NA SESSÃO */
+$idUsuariologado = $_SESSION['id'];
+$tipoUsadologado = $_SESSION['tipo'];
+
+$posts = lerPosts($conexao, $idUsuariologado, $tipoUsadologado);
+$quantidade = count($posts);
 
 ?>      
     
 <div class="row">
   <article class="col-12 bg-white rounded shadow my-1 py-4">
-    <h2 class="text-center">Posts <span class="badge badge-primary">X</span></h2>
+    <h2 class="text-center">Posts <span class="badge badge-primary"><?=$quantidade?></span></h2>
     <p class="lead text-right">
       <a class="btn btn-primary" href="post-insere.php">Inserir novo post</a>
     </p>
@@ -17,6 +26,7 @@ require "../inc/cabecalho-admin.php";
           <tr>
             <th>Título</th>
             <th>Data</th>
+            <!-- aqui eu preciso fazer o if else  -->
             <th>Autor</th>
             <th colspan="2" class="text-center">Operações</th>
           </tr>
@@ -24,13 +34,15 @@ require "../inc/cabecalho-admin.php";
       
         <tbody>
 
+        <?php foreach ($posts as $post) { ?>
+
           <tr>
-            <td> Título do post... </td>
-            <td> 21/12/2112 21:12 </td>
-            <td> Autor do post... </td>
+            <td> <?=$post['titulo'] ?></td>
+            <td> <?=$post['data']?> </td> 
+            <td> <?=$post['autor']?> </td>
             <td class="text-center">
               <a class="btn btn-warning btn-sm" 
-              href="post-atualiza.php">
+              href="post-atualiza.php?id=<?=$post['id']?>">
                   Atualizar
               </a>
             </td>
@@ -41,6 +53,7 @@ require "../inc/cabecalho-admin.php";
               </a>
             </td>
           </tr>
+          <?php } ?>
 
         </tbody>                
       </table>
