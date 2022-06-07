@@ -9,6 +9,9 @@ if(isset($_POST['inserir'])){
 
   //obtendo dados do arquivo enviado
   $imagem = $_FILES['imagem'];
+  /* var_dump($imagem);
+  die(); */
+
 
   //função de upload (responsável por enviar o arquivo para o HD do servidor)
   upload($imagem);
