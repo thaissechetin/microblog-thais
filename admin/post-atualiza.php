@@ -17,16 +17,24 @@ if(isset($_POST['atualizar'])){
   $texto = filter_input(INPUT_POST, 'texto', FILTER_SANITIZE_SPECIAL_CHARS);
   $resumo = filter_input(INPUT_POST, 'resumo', FILTER_SANITIZE_SPECIAL_CHARS);
 
- /* Se o campo imagem estiver vazio, significa que o usuário NÃO
+  /* Lógica de atualização da foto */
+
+ /* 1) Se o campo imagem estiver vazio, significa que o usuário NÃO
  QUER trocar de imagem, ou seja, o sistema vai manter a imagem existente */
+  if( empty($_FILES['imagem']['name']) ){
+    $imagem = $_POST['imagem-existente'];
+  } else {
+  /* 2) Senão, pegue a referência da nova imagem e faça o processo de 
+  upload para o servidor */
+    $imagem = $_FILES['imagem']['name'];
+    upload($_FILES['imagem']);
+  }
 
 
- /* Senão, pegue a referência da nova imagem e faça o processo de upload para o servidor */
-
-
- //Somente depois do processo de upload (se necessário), chamaremos a função de atualizarPost
-
- 
+ /* Somente depois do processo de upload (se necessário), 
+ chamaremos a função de atualizarPost */
+ atualizarPost($conexao, $idPost, $idUsuarioLogado, $tipoUsuarioLogado, 
+ $titulo, $texto, $resumo, $imagem);
 
   header("location:posts.php");
 }
@@ -37,7 +45,7 @@ if(isset($_POST['atualizar'])){
   <article class="col-12 bg-white rounded shadow my-1 py-4">
     <h2 class="text-center">Atualizar Post</h2>
 
-    <form class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar"> 
+    <form enctype="multipart/form-data" class="mx-auto w-75" action="" method="post" id="form-atualizar" name="form-atualizar"> 
         
       <div class="form-group">
         <label for="titulo">Título:</label>

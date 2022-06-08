@@ -53,7 +53,7 @@ $quantidade = count($posts);
             </td>
             <td class="text-center">
               <a class="btn btn-danger btn-sm excluir"
-              href="post-exclui.php?id?=<?=$post['id']?>">
+              href="post-exclui.php?id=<?=$post['id']?>">
                   Excluir
               </a>
             </td>
