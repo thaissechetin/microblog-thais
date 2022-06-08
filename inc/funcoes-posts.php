@@ -35,9 +35,24 @@ function lerPosts(mysqli $conexao, int $idUsuarioLogado, string $tipoUsuarioLoga
 
 
 /* Usada em post-atualiza.php */
-function lerUmPost(mysqli $conexao): array
-{
-    $sql = "";
+function lerUmPost(mysqli $conexao,  int $idPost, int $idUsuarioLogado, string $tipoUsuarioLogado): array {
+
+    /* Se o usuário logado for
+     admin, então pode carregar os dados de qualquer post de
+    qualquer usuário */
+    if( $tipoUsuarioLogado == 'admin' ){
+        $sql = "SELECT titulo, texto, resumo, imagem, usuario_id FROM posts 
+        WHERE id = $idPost";
+    } else {
+    /* Caso contrário, significa que é um usuário editor, 
+    portanto só poderar carregar os dados de seus próprios posts. */
+        $sql = "SELECT titulo, texto, resumo, imagem, usuario_id FROM posts
+        WHERE id = $idPost AND usuario_id = $idUsuarioLogado";
+    }
+
+
+   
+ 
 
     $resultado = mysqli_query($conexao, $sql) or die(mysqli_error($conexao));
     return mysqli_fetch_assoc($resultado);
@@ -68,7 +83,7 @@ function excluirPost(mysqli $conexao)
 /* Funções utilitárias */
 
 /* Usada em post-insere.php e post-atualiza.php */
-function upload($arquivo)
+function upload(array $arquivo)
 {
     //definindo os tipos de imagem aceitos 
     $tiposValidos = [
@@ -105,8 +120,10 @@ function upload($arquivo)
 
 
 /* Usada em posts.php e páginas da área pública */
-function formataData()
-{
+function formataData(string $data):string {
+    /* pegamos a data informada, transformamos em texto(strotime) e depois aplicamos o formato brasileiro (dia/mes/ANO) */
+    return date("d/m/Y H:i", strtotime($data));
+
 } // fim formataData
 
 

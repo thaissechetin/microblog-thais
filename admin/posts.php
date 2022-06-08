@@ -5,9 +5,9 @@ require "../inc/cabecalho-admin.php";
 
 /* rECUPERANDO OS DADOS DO USUARIO Q ESTÁ LOGADO NA SESSÃO */
 $idUsuariologado = $_SESSION['id'];
-$tipoUsuariologado = $_SESSION['tipo'];
+$tipoUsuarioLogado = $_SESSION['tipo'];
 
-$posts = lerPosts($conexao, $idUsuariologado, $tipoUsadologado);
+$posts = lerPosts($conexao, $idUsuariologado, $tipoUsuarioLogado);
 $quantidade = count($posts);
 
 ?>      
@@ -26,7 +26,7 @@ $quantidade = count($posts);
           <tr>
             <th>Título</th>
             <th>Data</th>
-            <?php if($tipoUsuariologado == 'admin'){ ?>
+            <?php if($tipoUsuarioLogado == 'admin'){ ?>
             <th>Autor</th>
             <?php } ?>
             <th colspan="2" class="text-center">Operações</th>
@@ -39,7 +39,8 @@ $quantidade = count($posts);
 
           <tr>
             <td> <?=$post['titulo'] ?></td>
-            <td> <?=$post['data']?> </td> 
+            <td> <?=formataData($post['data'])?> </td> 
+
             <?php if( $tipoUsuarioLogado == 'admin'){ ?>
             <td> <?=$post['autor']?> </td>
             <?php } ?>
@@ -52,7 +53,7 @@ $quantidade = count($posts);
             </td>
             <td class="text-center">
               <a class="btn btn-danger btn-sm excluir"
-              href="post-exclui.php">
+              href="post-exclui.php?id?=<?=$post['id']?>">
                   Excluir
               </a>
             </td>
